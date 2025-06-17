@@ -14,8 +14,9 @@ import StorySection from './components/StorySection';
 import TestimonialsCarousel from './components/TestimonialsCarousel';
 import Profile from './components/Profile';
 import { PRODUCTS } from './data/products';
+import FloatingCart from './components/FloatingCart';
 
-function AppContent({ cart, addToCart, removeFromCart, cartTotal, user }) {
+function AppContent({ cart, addToCart, removeFromCart, cartTotal, user, updateQuantity }) {
   const [showSearch, setShowSearch] = useState(false);
 
   // Close search when clicking outside
@@ -69,12 +70,13 @@ function AppContent({ cart, addToCart, removeFromCart, cartTotal, user }) {
         <Route path="/story" element={<StorySection />} />
         <Route path="/reviews" element={<TestimonialsCarousel />} />
         <Route path="/product/:id" element={<ProductDetail products={PRODUCTS} addToCart={addToCart} />} />
-        <Route path="/cart" element={<CartPage cart={cart} removeFromCart={removeFromCart} cartTotal={cartTotal} />} />
+        <Route path="/cart" element={<CartPage cart={cart} removeFromCart={removeFromCart} cartTotal={cartTotal} updateQuantity={updateQuantity} />} />
         <Route path="/checkout" element={<CheckoutPage cart={cart} cartTotal={cartTotal} />} />
         <Route path="/profile" element={<Profile user={user} />} />
       </Routes>
 
       <Footer />
+      <FloatingCart cart={cart} />
     </div>
   );
 }
@@ -137,8 +139,16 @@ function App() {
 
   const addToCart = (product) => {
     setCart(prevCart => {
-      const newCart = [...prevCart, { ...product, cartId: Date.now() }];
-      return newCart;
+      const existingItem = prevCart.find(item => item.id === product.id);
+      if (existingItem) {
+        return prevCart.map(item =>
+          item.id === product.id
+            ? { ...item, quantity: item.quantity + 1 }
+            : item
+        );
+      } else {
+        return [...prevCart, { ...product, cartId: Date.now(), quantity: 1 }];
+      }
     });
   };
 
@@ -164,6 +174,7 @@ function App() {
           removeFromCart={removeFromCart}
           cartTotal={cartTotal}
           user={user}
+          updateQuantity={updateQuantity}
         />
       </Router>
     </HelmetProvider>
