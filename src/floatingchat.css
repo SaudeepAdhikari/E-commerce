@@ -1,0 +1,86 @@
+.floating-chat {
+  position: fixed;
+  bottom: 32px;
+  right: 32px;
+  z-index: 5000;
+  background: linear-gradient(135deg, #56ab2f 0%, #a8e063 100%);
+  color: #fff;
+  border: none;
+  border-radius: 50%;
+  width: 60px;
+  height: 60px;
+  font-size: 2rem;
+  box-shadow: 0 4px 16px #a8e06355;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.2s, transform 0.2s;
+  animation: fadeInUp 1s cubic-bezier(.77,0,.18,1);
+}
+.floating-chat:hover {
+  background: linear-gradient(135deg, #a8e063 0%, #56ab2f 100%);
+  transform: scale(1.08);
+}
+.floating-chat-window {
+  position: fixed;
+  bottom: 100px;
+  right: 32px;
+  background: #fff;
+  border-radius: 18px;
+  box-shadow: 0 8px 32px rgba(86,171,47,0.18);
+  padding: 24px 18px 18px 18px;
+  z-index: 5001;
+  min-width: 280px;
+  max-width: 340px;
+  animation: fadeInUp 0.7s cubic-bezier(.77,0,.18,1);
+}
+.floating-chat-window b {
+  color: #56ab2f;
+  font-size: 1.15rem;
+}
+.floating-chat-messages {
+  max-height: 180px;
+  overflow-y: auto;
+  margin: 12px 0;
+  background: #f7f7f7;
+  border-radius: 8px;
+  padding: 8px;
+}
+.floating-chat-input-row {
+  display: flex;
+  gap: 8px;
+}
+.floating-chat-input {
+  flex: 1;
+  padding: 8px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  font-size: 1rem;
+}
+.floating-chat-send {
+  background: #56ab2f;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 8px 14px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: background 0.2s, transform 0.2s;
+}
+.floating-chat-send:hover {
+  background: #3d7a1f;
+  transform: scale(1.05);
+}
+@media (max-width: 600px) {
+  .floating-chat, .floating-chat-window {
+    right: 8px;
+    bottom: 8px;
+    min-width: 90vw;
+    max-width: 98vw;
+  }
+  .floating-chat-window {
+    bottom: 80px;
+    padding: 12px 4px 8px 4px;
+  }
+}

@@ -1,0 +1,143 @@
+.filter-toggle-container {
+  display: flex;
+  justify-content: center;
+  margin: 0 auto 12px auto;
+  max-width: 1000px;
+  align-items: center;
+  gap: 12px;
+}
+
+.filter-toggle-btn {
+  background: #56ab2f;
+  color: white;
+  border: none;
+  border-radius: 25px;
+  padding: 10px 20px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 8px rgba(86,171,47,0.2);
+}
+
+.filter-toggle-btn:hover {
+  background: #448a25;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(86,171,47,0.25);
+}
+
+.filter-toggle-btn.active {
+  background: #448a25;
+}
+
+.filter-toggle-clear {
+  background: #f7f7f7;
+  border: 1px solid #e0e0e0;
+  border-radius: 20px;
+  padding: 6px 14px;
+}
+
+.tea-filter-container {
+  background: #fff;
+  border-radius: 12px;
+  padding: 18px 24px;
+  margin-bottom: 24px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+  max-width: 1000px;
+  margin: 0 auto 24px auto;
+  animation: fadeInUp 0.5s ease;
+  transition: max-height 0.5s ease, opacity 0.3s ease, transform 0.3s ease;
+}
+
+.tea-filter-container.visible {
+  max-height: 1000px;
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.tea-filter-container.hidden {
+  max-height: 0;
+  overflow: hidden;
+  opacity: 0;
+  padding-top: 0;
+  padding-bottom: 0;
+  margin-top: 0;
+  margin-bottom: 0;
+  transform: translateY(-20px);
+}
+
+.filter-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+.filter-header h3 {
+  margin: 0;
+  color: #222;
+  font-size: 1.2rem;
+}
+
+.clear-filters-btn {
+  background: none;
+  border: none;
+  color: #56ab2f;
+  cursor: pointer;
+  font-size: 0.9rem;
+  text-decoration: underline;
+  padding: 0;
+}
+
+.filter-section {
+  margin-bottom: 16px;
+}
+
+.filter-section h4 {
+  margin: 0 0 8px 0;
+  font-size: 1rem;
+  color: #555;
+}
+
+.filter-options {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.filter-btn {
+  background: #f7f7f7;
+  border: 1px solid #e0ffe0;
+  border-radius: 20px;
+  padding: 6px 14px;
+  font-size: 0.95rem;
+  color: #444;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.filter-btn:hover {
+  background: #e0ffe0;
+  color: #56ab2f;
+}
+
+.filter-btn.active {
+  background: #56ab2f;
+  color: white;
+  border-color: #56ab2f;
+}
+
+@media (max-width: 768px) {
+  .tea-filter-container {
+    padding: 16px;
+  }
+
+  .filter-options {
+    gap: 6px;
+  }
+
+  .filter-btn {
+    padding: 5px 10px;
+    font-size: 0.85rem;
+  }
+}

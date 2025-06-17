@@ -1,13 +1,171 @@
+/* ===== Demaj Tea Global Styles ===== */
 body {
+  font-family: 'Poppins', 'Montserrat', 'Open Sans', Arial, sans-serif;
+  background: linear-gradient(120deg, #f9f6f2 0%, #f4f4f4 100%);
+  color: #222;
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  padding: 0;
+  min-height: 100vh;
+  letter-spacing: 0.01em;
+  font-size: 1.05rem;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: 'Montserrat', 'Poppins', Arial, sans-serif;
+  color: #295C3A;
+  margin-top: 0;
+  font-weight: 700;
+  letter-spacing: 0.01em;
+}
+
+h1 {
+  font-size: 2.5rem;
+  margin-bottom: 1rem;
+  color: #295C3A;
+}
+
+h2 {
+  font-size: 2rem;
+  margin-bottom: 0.8rem;
+  color: #295C3A;
+}
+
+h3 {
+  font-size: 1.4rem;
+  margin-bottom: 0.6rem;
+  color: #295C3A;
+}
+
+p {
+  color: #3d3d3d;
+  line-height: 1.7;
+  margin-top: 0;
+}
+
+a {
+  color: #295C3A;
+  text-decoration: none;
+  transition: color 0.2s;
+  font-weight: 500;
+}
+
+a:hover {
+  color: #D4AF37;
+  text-decoration: underline;
+}
+
+/* ===== Card Styles ===== */
+.card {
+  background: #fff;
+  border-radius: 1.2rem;
+  box-shadow: 0 4px 24px rgba(41, 92, 58, 0.09);
+  padding: 2rem;
+  margin: 1.5rem 0;
+  transition: box-shadow 0.2s;
+  border: 1.5px solid #e6e6e6;
+}
+
+.card:hover {
+  box-shadow: 0 8px 32px rgba(41, 92, 58, 0.13);
+  border-color: #A3C9E2;
+}
+
+/* ===== Button Styles ===== */
+button,
+.btn {
+  background: linear-gradient(90deg, #295C3A 0%, #A3C9E2 100%);
+  color: #fff;
+  border: none;
+  border-radius: 2rem;
+  padding: 0.8rem 2rem;
+  font-size: 1.08rem;
+  font-family: inherit;
+  font-weight: 600;
+  cursor: pointer;
+  box-shadow: 0 2px 8px rgba(41, 92, 58, 0.07);
+  transition: background 0.2s, box-shadow 0.2s, transform 0.1s;
+  letter-spacing: 0.01em;
+}
+
+button:hover,
+.btn:hover {
+  background: linear-gradient(90deg, #D4AF37 0%, #295C3A 100%);
+  box-shadow: 0 4px 16px rgba(41, 92, 58, 0.13);
+  transform: translateY(-2px) scale(1.03);
+  color: #fff;
+}
+
+input,
+textarea,
+select {
+  border-radius: 1.2rem;
+  border: 1.5px solid #A3C9E2;
+  padding: 0.9rem 1.2rem;
+  font-size: 1rem;
+  font-family: inherit;
+  background: #f9f6f2;
+  transition: border 0.2s, box-shadow 0.2s;
+}
+
+input:focus,
+textarea:focus,
+select:focus {
+  outline: none;
+  border-color: #295C3A;
+  box-shadow: 0 0 0 2px rgba(41, 92, 58, 0.13);
+  background: #fff;
+}
+
+/* ===== Section Styles ===== */
+section {
+  margin: 2.5rem 0;
+  padding: 2.5rem 0;
+  border-radius: 1.2rem;
+  background: rgba(255, 255, 255, 0.85);
+  box-shadow: 0 2px 12px rgba(41, 92, 58, 0.05);
+}
+
+/* ===== Utility ===== */
+.text-center {
+  text-align: center;
+}
+
+.mt-2 {
+  margin-top: 2rem;
+}
+
+.mb-2 {
+  margin-bottom: 2rem;
+}
+
+.gold {
+  color: #D4AF37;
+}
+
+.green {
+  color: #295C3A;
+}
+
+@media (max-width: 768px) {
+  h1 {
+    font-size: 2rem;
+  }
+
+  h2 {
+    font-size: 1.4rem;
+  }
+
+  h3 {
+    font-size: 1.1rem;
+  }
+
+  .card,
+  section {
+    padding: 1.2rem;
+  }
 }

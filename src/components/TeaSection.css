@@ -1,0 +1,142 @@
+.tea-section {
+    padding: 4rem 2rem;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.section-header {
+    text-align: center;
+    margin-bottom: 3rem;
+}
+
+.section-header h2 {
+    font-size: 2.5rem;
+    color: #333;
+    margin-bottom: 1rem;
+}
+
+.section-header p {
+    font-size: 1.2rem;
+    color: #666;
+}
+
+.tea-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 2rem;
+    padding: 1rem;
+}
+
+.tea-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2.5rem;
+    justify-content: center;
+    margin: 2rem 0;
+}
+
+.tea-card {
+    background: #fff;
+    border-radius: 1.2rem;
+    box-shadow: 0 4px 24px rgba(41, 92, 58, 0.09);
+    padding: 1.5rem 1.2rem 1.2rem 1.2rem;
+    width: 270px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    transition: box-shadow 0.2s, transform 0.15s;
+    border: 1.5px solid #e6e6e6;
+    position: relative;
+}
+
+.tea-card:hover {
+    box-shadow: 0 8px 32px rgba(41, 92, 58, 0.13);
+    border-color: #A3C9E2;
+    transform: translateY(-4px) scale(1.03);
+}
+
+.tea-card-image {
+    width: 160px;
+    height: 160px;
+    object-fit: cover;
+    border-radius: 1rem;
+    box-shadow: 0 2px 12px rgba(41, 92, 58, 0.08);
+    margin-bottom: 1.2rem;
+    background: #f9f6f2;
+}
+
+.tea-card-title {
+    font-size: 1.18rem;
+    font-weight: 700;
+    color: #295C3A;
+    margin-bottom: 0.5rem;
+    text-align: center;
+}
+
+.tea-card-desc {
+    color: #3d3d3d;
+    font-size: 1.01rem;
+    margin-bottom: 0.7rem;
+    text-align: center;
+    min-height: 48px;
+}
+
+.tea-card-price {
+    color: #D4AF37;
+    font-size: 1.12rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+}
+
+.tea-card-btn {
+    background: linear-gradient(90deg, #295C3A 0%, #A3C9E2 100%);
+    color: #fff;
+    border: none;
+    border-radius: 2rem;
+    padding: 0.7rem 1.7rem;
+    font-size: 1.05rem;
+    font-weight: 600;
+    cursor: pointer;
+    box-shadow: 0 2px 8px rgba(41, 92, 58, 0.07);
+    transition: background 0.2s, box-shadow 0.2s, transform 0.1s;
+    letter-spacing: 0.01em;
+}
+
+.tea-card-btn:hover {
+    background: linear-gradient(90deg, #D4AF37 0%, #295C3A 100%);
+    color: #fff;
+    box-shadow: 0 4px 16px rgba(41, 92, 58, 0.13);
+    transform: translateY(-2px) scale(1.03);
+}
+
+@media (max-width: 900px) {
+    .tea-list {
+        gap: 1.2rem;
+    }
+
+    .tea-card {
+        width: 95vw;
+        max-width: 340px;
+        padding: 1.2rem 0.7rem 1rem 0.7rem;
+    }
+
+    .tea-card-image {
+        width: 120px;
+        height: 120px;
+    }
+}
+
+@media (max-width: 768px) {
+    .tea-section {
+        padding: 2rem 1rem;
+    }
+
+    .section-header h2 {
+        font-size: 2rem;
+    }
+
+    .tea-grid {
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 1.5rem;
+    }
+}

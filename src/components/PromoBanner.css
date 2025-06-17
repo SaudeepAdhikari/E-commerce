@@ -1,0 +1,24 @@
+.promo-banner {
+    background: #56ab2f;
+    color: white;
+    text-align: center;
+    padding: 0.8rem;
+    font-weight: 500;
+    position: relative;
+    overflow: hidden;
+}
+
+.promo-banner span {
+    display: inline-block;
+    animation: slide 20s linear infinite;
+}
+
+@keyframes slide {
+    0% {
+        transform: translateX(100%);
+    }
+
+    100% {
+        transform: translateX(-100%);
+    }
+}

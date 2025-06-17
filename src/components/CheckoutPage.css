@@ -1,0 +1,133 @@
+.checkout-page {
+    max-width: 700px;
+    margin: 2.5rem auto;
+    background: #fff;
+    border-radius: 1.2rem;
+    box-shadow: 0 4px 24px rgba(41, 92, 58, 0.09);
+    padding: 2.5rem 2rem 2rem 2rem;
+    font-family: 'Poppins', 'Montserrat', Arial, sans-serif;
+}
+
+.checkout-title {
+    font-size: 2rem;
+    font-weight: 700;
+    color: #295C3A;
+    margin-bottom: 1.5rem;
+    letter-spacing: 0.01em;
+}
+
+.checkout-progress-bar {
+    height: 4px;
+    background: #f0f0f0;
+    border-radius: 2px;
+    margin-bottom: 2rem;
+    overflow: hidden;
+}
+
+.checkout-progress {
+    height: 100%;
+    background: #56ab2f;
+    transition: width 0.5s ease;
+}
+
+.checkout-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.checkout-label {
+    color: #295C3A;
+    font-size: 1.08rem;
+    font-weight: 600;
+    margin-bottom: 0.4rem;
+}
+
+.checkout-input {
+    border-radius: 1.2rem;
+    border: 1.5px solid #A3C9E2;
+    padding: 0.9rem 1.2rem;
+    font-size: 1rem;
+    font-family: inherit;
+    background: #f9f6f2;
+    transition: border 0.2s, box-shadow 0.2s;
+}
+
+.checkout-input:focus {
+    outline: none;
+    border-color: #295C3A;
+    box-shadow: 0 0 0 2px rgba(41, 92, 58, 0.13);
+    background: #fff;
+}
+
+.checkout-summary {
+    background: #f9f6f2;
+    border-radius: 1rem;
+    box-shadow: 0 2px 8px rgba(41, 92, 58, 0.07);
+    padding: 1.7rem 1.2rem;
+    margin-top: 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.2rem;
+}
+
+.checkout-summary-label {
+    color: #295C3A;
+    font-size: 1.1rem;
+    font-weight: 600;
+}
+
+.checkout-summary-value {
+    color: #D4AF37;
+    font-size: 1.25rem;
+    font-weight: 700;
+}
+
+.checkout-btn {
+    background: linear-gradient(90deg, #295C3A 0%, #A3C9E2 100%);
+    color: #fff;
+    border: none;
+    border-radius: 2rem;
+    padding: 0.8rem 2.2rem;
+    font-size: 1.08rem;
+    font-weight: 600;
+    cursor: pointer;
+    box-shadow: 0 2px 8px rgba(41, 92, 58, 0.07);
+    transition: background 0.2s, box-shadow 0.2s, transform 0.1s;
+    letter-spacing: 0.01em;
+}
+
+.checkout-btn:hover {
+    background: linear-gradient(90deg, #D4AF37 0%, #295C3A 100%);
+    color: #fff;
+    box-shadow: 0 4px 16px rgba(41, 92, 58, 0.13);
+    transform: translateY(-2px) scale(1.03);
+}
+
+.checkout-success {
+    text-align: center;
+    padding: 3rem;
+    background: white;
+    border-radius: 15px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+.checkout-success-img {
+    width: 100px;
+    margin-bottom: 1.5rem;
+}
+
+.checkout-success h2 {
+    color: #56ab2f;
+    margin-bottom: 1rem;
+}
+
+@media (max-width: 700px) {
+    .checkout-page {
+        padding: 1.2rem 0.3rem 1.2rem 0.3rem;
+    }
+
+    .checkout-summary {
+        padding: 1.2rem 0.7rem;
+    }
+}
