@@ -39,8 +39,8 @@ function SearchBar({ products }) {
         <div className="search-results">
           {searchResults.map(product => (
             <Link
-              key={product.id}
-              to={`/product/${product.id}`}
+              key={product._id}
+              to={`/product/${product._id}`}
               className="search-result-item"
             >
               <img src={product.image} alt={product.name} className="search-result-image" />

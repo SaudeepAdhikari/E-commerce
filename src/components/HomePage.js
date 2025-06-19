@@ -5,10 +5,9 @@ import StarRating from './StarRating';
 import TestimonialsCarousel from './TestimonialsCarousel';
 import TeaFilter from './TeaFilter';
 import AnimatedBackground from './AnimatedBackground';
-import { PRODUCTS } from '../data/products';
 import './HomePage.css';
 
-function HomePage({ addToCart, scrollTo, initialFilters, updateFiltersInURL }) {
+function HomePage({ addToCart, products, scrollTo, initialFilters, updateFiltersInURL }) {
   const navigate = useNavigate();
   const categoriesRef = React.useRef(null);
   const testimonialsRef = React.useRef(null);
@@ -19,7 +18,7 @@ function HomePage({ addToCart, scrollTo, initialFilters, updateFiltersInURL }) {
     price: '',
     popularity: ''
   });
-  const [filteredProducts, setFilteredProducts] = useState(PRODUCTS);
+  const [filteredProducts, setFilteredProducts] = useState(products);
 
   useEffect(() => {
     if (scrollTo === 'categories' && categoriesRef.current) {
@@ -32,17 +31,16 @@ function HomePage({ addToCart, scrollTo, initialFilters, updateFiltersInURL }) {
   }, [scrollTo]);
 
   useEffect(() => {
-    let result = PRODUCTS;
-    if (filters.type) result = result.filter(product => product.type === filters.type);
+    let result = products;
+    if (filters.type) result = result.filter(product => product.category.toLowerCase() === filters.type.toLowerCase());
     if (filters.price) {
       if (filters.price === 'low') result = result.filter(product => product.price < 10);
       if (filters.price === 'medium') result = result.filter(product => product.price >= 10 && product.price <= 15);
       if (filters.price === 'high') result = result.filter(product => product.price > 15);
     }
-    if (filters.popularity) result = result.filter(product => product.popularity === filters.popularity);
     setFilteredProducts(result);
     if (updateFiltersInURL) updateFiltersInURL(filters);
-  }, [filters, updateFiltersInURL]);
+  }, [filters, products, updateFiltersInURL]);
 
   return (
     <>
@@ -79,14 +77,13 @@ function HomePage({ addToCart, scrollTo, initialFilters, updateFiltersInURL }) {
         ) : (
           <div className="tea-list">
             {filteredProducts.map((product, i) => (
-              <div className="tea-card" key={product.id} onClick={() => navigate(`/product/${product.id}`)} style={{ animationDelay: `${i * 0.12 + 0.2}s` }} role="button" tabIndex={0} aria-label={`View details for ${product.name}`}>
+              <div className="tea-card" key={product._id} onClick={() => navigate(`/product/${product._id}`)} style={{ animationDelay: `${i * 0.12 + 0.2}s` }} role="button" tabIndex={0} aria-label={`View details for ${product.name}`}>
                 <img src={product.image} alt={product.name} className="tea-card-image" loading="lazy" />
-                <div className="tea-type-badge">{product.type}</div>
-                <StarRating rating={product.rating} />
+                <div className="tea-type-badge">{product.category}</div>
                 <div className="tea-card-title">{product.name}</div>
                 <div className="tea-card-desc">{product.description}</div>
-                <div className="tea-card-price">${product.price.toFixed(2)}</div>
-                <button className="tea-card-btn" onClick={e => { e.stopPropagation(); addToCart(product); }} aria-label={`Add ${product.name} to cart`}>Add to Cart</button>
+                <div className="tea-card-price">${parseFloat(product.price).toFixed(2)}</div>
+                <button className="tea-card-btn" onClick={e => { e.stopPropagation(); addToCart(product._id ? product : { ...product, _id: product.id }); }} aria-label={`Add ${product.name} to cart`}>Add to Cart</button>
               </div>
             ))}
           </div>

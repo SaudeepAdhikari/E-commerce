@@ -1,14 +1,13 @@
 import React, { useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
-import { PRODUCTS } from '../data/products';
 import ReviewsSection from './ReviewsSection';
 import './ProductDetail.css';
 
-function ProductDetail({ addToCart }) {
+function ProductDetail({ products, addToCart }) {
   const { id } = useParams();
   const navigate = useNavigate();
-  const product = PRODUCTS.find(p => p.id === parseInt(id));
+  const product = products.find(p => p._id === id);
   const [productReviews, setProductReviews] = useState(() => {
     // Retrieve reviews from localStorage if available
     const savedReviews = localStorage.getItem(`productReviews-${id}`);
@@ -38,34 +37,24 @@ function ProductDetail({ addToCart }) {
   return (
     <div className="product-detail">
       <Helmet>
-        <title>{product.name} - Tea Shop</title>
-        <meta name="description" content={product.description} />
+        <title>{product.name} - Demaj Tea</title>
       </Helmet>
-
       <div className="product-container">
-        <button onClick={() => navigate('/')} className="back-btn">
-          Back to Home
-        </button>
-
         <div className="product-gallery">
           <img src={product.image} alt={product.name} className="product-main-img" />
         </div>
-
         <div className="product-info">
           <h2>{product.name}</h2>
-          <p className="product-description">{product.description}</p>
-          <p className="price">${product.price.toFixed(2)}</p>
-          <button
-            onClick={() => addToCart(product)}
-            className="add-to-cart-btn"
-          >
+          <div className="product-description">{product.description}</div>
+          <div className="price">${parseFloat(product.price).toFixed(2)}</div>
+          <button className="add-to-cart-btn" onClick={() => addToCart(product)}>
             Add to Cart
           </button>
         </div>
       </div>
       <ReviewsSection
-        productId={product.id}
-        initialReviews={productReviews}
+        productId={id}
+        reviews={productReviews}
         onAddReview={handleAddReview}
       />
     </div>

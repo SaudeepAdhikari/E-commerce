@@ -1,8 +1,7 @@
 import React from 'react';
-import { PRODUCTS } from '../data/products';
 import './TeaSection.css';
 
-function TeaSection({ addToCart }) {
+function TeaSection({ products, addToCart }) {
     return (
         <div className="tea-section">
             <div className="section-header">
@@ -10,15 +9,15 @@ function TeaSection({ addToCart }) {
                 <p>Discover our carefully curated selection of premium teas</p>
             </div>
             <div className="tea-list">
-                {PRODUCTS.map((product) => (
+                {products.map((product) => (
                     <div key={product.id} className="tea-card">
                         <img src={product.image} alt={product.name} className="tea-card-image" />
                         <div className="tea-card-title">{product.name}</div>
                         <div className="tea-card-desc">{product.description}</div>
-                        <div className="tea-card-price">${product.price.toFixed(2)}</div>
+                        <div className="tea-card-price">${parseFloat(product.price).toFixed(2)}</div>
                         <button
                             className="tea-card-btn"
-                            onClick={() => addToCart(product)}
+                            onClick={() => addToCart(product._id ? product : { ...product, _id: product.id })}
                         >
                             Add to Cart
                         </button>
