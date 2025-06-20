@@ -26,7 +26,7 @@ function Footer() {
         </div>
       </div>
       <div className="footer-bottom">
-        &copy; {new Date().getFullYear()} Saudeep Adhikari. All rights reserved.
+        &copy; {new Date().getFullYear()} DON Saudeep Adhikari. All rights reserved.
       </div>
       <div className="footer-watermark">
         <svg width="120" height="120" viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg">
