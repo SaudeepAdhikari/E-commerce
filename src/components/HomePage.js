@@ -83,7 +83,7 @@ function HomePage({ addToCart, products, scrollTo, initialFilters, updateFilters
                 <div className="tea-card-title">{product.name}</div>
                 <div className="tea-card-desc">{product.description}</div>
                 <div className="tea-card-price">${parseFloat(product.price).toFixed(2)}</div>
-                <button className="tea-card-btn" onClick={e => { e.stopPropagation(); addToCart(product._id ? product : { ...product, _id: product.id }); }} aria-label={`Add ${product.name} to cart`}>Add to Cart</button>
+                <button className="tea-card-btn" onClick={e => { e.stopPropagation(); addToCart(product); }} aria-label={`Add ${product.name} to cart`}>Add to Cart</button>
               </div>
             ))}
           </div>

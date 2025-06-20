@@ -223,4 +223,4 @@ router.delete('/cart', auth, async (req, res) => {
     }
 });
 
-module.exports = router; 
+module.exports = { router, auth }; 

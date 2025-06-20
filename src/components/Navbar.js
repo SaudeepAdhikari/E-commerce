@@ -48,6 +48,7 @@ function Navbar({ cartCount, user, onLogout }) {
                     {showDropdown && user && (
                         <div className="profile-dropdown-menu">
                             <button onClick={() => { setShowDropdown(false); navigate('/profile'); }}>My Profile</button>
+                            <button onClick={() => { setShowDropdown(false); navigate('/order-history'); }}>Order History</button>
                             <button onClick={() => { setShowDropdown(false); navigate('/settings'); }}>Settings</button>
                             <button onClick={() => { setShowDropdown(false); navigate('/saved'); }}>Saved Items</button>
                             <button onClick={() => { setShowDropdown(false); navigate('/help'); }}>Help / Support</button>

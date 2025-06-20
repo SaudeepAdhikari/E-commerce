@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './ProductManagement.css';
+import StarRating from '../StarRating';
 
 function ProductManagement({ products, onAddProduct, onUpdateProduct, onDeleteProduct }) {
     const [isAddingProduct, setIsAddingProduct] = useState(false);
@@ -15,6 +16,10 @@ function ProductManagement({ products, onAddProduct, onUpdateProduct, onDeletePr
     });
     const [imageFile, setImageFile] = useState(null);
     const [imagePreview, setImagePreview] = useState('');
+    const [selectedProductForReviews, setSelectedProductForReviews] = useState(null);
+    const [reviews, setReviews] = useState([]);
+    const [loadingReviews, setLoadingReviews] = useState(false);
+    const [errorReviews, setErrorReviews] = useState('');
     const navigate = useNavigate();
 
     const handleInputChange = (e) => {
@@ -107,6 +112,33 @@ function ProductManagement({ products, onAddProduct, onUpdateProduct, onDeletePr
         if (window.confirm('Are you sure you want to delete this product?')) {
             onDeleteProduct(productId);
         }
+    };
+
+    const handleViewReviews = async (product) => {
+        setSelectedProductForReviews(product);
+        setLoadingReviews(true);
+        setErrorReviews('');
+        try {
+            const res = await fetch(`http://localhost:5000/api/products/${product._id}/reviews`);
+            const data = await res.json();
+            setReviews(Array.isArray(data) ? data : []);
+        } catch (err) {
+            setErrorReviews('Failed to load reviews');
+            setReviews([]);
+        }
+        setLoadingReviews(false);
+    };
+
+    const handleDeleteReview = async (productId, reviewIdx) => {
+        if (!window.confirm('Are you sure you want to delete this review?')) return;
+        setLoadingReviews(true);
+        try {
+            const res = await fetch(`http://localhost:5000/api/products/${productId}/reviews/${reviewIdx}`, { method: 'DELETE' });
+            if (res.ok) {
+                setReviews(reviews => reviews.filter((_, idx) => idx !== reviewIdx));
+            }
+        } catch (err) { }
+        setLoadingReviews(false);
     };
 
     console.log('Rendering products:', products);
@@ -262,51 +294,88 @@ function ProductManagement({ products, onAddProduct, onUpdateProduct, onDeletePr
                                 <th>Category</th>
                                 <th>Price</th>
                                 <th>Stock</th>
+                                <th>Avg Rating</th>
                                 <th>Actions</th>
                             </tr>
                         </thead>
                         <tbody>
-                            {products.map(product => (
-                                <tr key={product._id}>
-                                    <td>
-                                        <img
-                                            src={product.image}
-                                            alt={product.name}
-                                            className="product-thumbnail"
-                                            onError={e => {
-                                                console.log('Image failed to load:', product.image);
-                                                e.target.onerror = null;
-                                                e.target.src = '/no-image.png';
-                                            }}
-                                        />
-                                    </td>
-                                    <td>{product.name}</td>
-                                    <td>{product.category}</td>
-                                    <td>${product.price}</td>
-                                    <td>{product.stock}</td>
-                                    <td>
-                                        <button
-                                            className="edit-btn"
-                                            onClick={() => handleEdit(product)}
-                                        >
-                                            Edit
-                                        </button>
-                                        <button
-                                            className="delete-btn"
-                                            onClick={() => {
-                                                console.log('Delete button clicked for', product._id);
-                                                handleDelete(product._id);
-                                            }}
-                                        >
-                                            Delete
-                                        </button>
-                                    </td>
-                                </tr>
-                            ))}
+                            {products.map(product => {
+                                const avgRating = product.reviews && product.reviews.length > 0
+                                    ? (product.reviews.reduce((sum, r) => sum + r.rating, 0) / product.reviews.length).toFixed(1)
+                                    : '-';
+                                return (
+                                    <tr key={product._id}>
+                                        <td>
+                                            <img
+                                                src={product.image}
+                                                alt={product.name}
+                                                className="product-thumbnail"
+                                                onError={e => {
+                                                    console.log('Image failed to load:', product.image);
+                                                    e.target.onerror = null;
+                                                    e.target.src = '/no-image.png';
+                                                }}
+                                            />
+                                        </td>
+                                        <td>{product.name}</td>
+                                        <td>{product.category}</td>
+                                        <td>${product.price}</td>
+                                        <td>{product.stock}</td>
+                                        <td>{avgRating !== '-' ? <StarRating rating={parseFloat(avgRating)} size="small" /> : '-'}</td>
+                                        <td>
+                                            <button
+                                                className="edit-btn"
+                                                onClick={() => handleEdit(product)}
+                                            >
+                                                Edit
+                                            </button>
+                                            <button
+                                                className="delete-btn"
+                                                onClick={() => {
+                                                    console.log('Delete button clicked for', product._id);
+                                                    handleDelete(product._id);
+                                                }}
+                                            >
+                                                Delete
+                                            </button>
+                                            <button
+                                                className="view-btn"
+                                                onClick={() => handleViewReviews(product)}
+                                            >
+                                                View Reviews
+                                            </button>
+                                        </td>
+                                    </tr>
+                                )
+                            })}
                         </tbody>
                     </table>
                 )}
             </div>
+            {selectedProductForReviews && (
+                <div className="admin-reviews-section" style={{ background: '#fff', borderRadius: 8, boxShadow: '0 2px 8px rgba(0,0,0,0.08)', margin: '2rem 0', padding: '2rem' }}>
+                    <h3>Reviews for {selectedProductForReviews.name}</h3>
+                    <button style={{ float: 'right', marginBottom: 10 }} onClick={() => setSelectedProductForReviews(null)}>Close</button>
+                    {loadingReviews ? (
+                        <div>Loading reviews...</div>
+                    ) : errorReviews ? (
+                        <div style={{ color: 'red' }}>{errorReviews}</div>
+                    ) : reviews.length === 0 ? (
+                        <div>No reviews for this product.</div>
+                    ) : (
+                        <ul style={{ listStyle: 'none', padding: 0 }}>
+                            {reviews.map((review, idx) => (
+                                <li key={review._id || review.date || idx} style={{ borderBottom: '1px solid #eee', marginBottom: 16, paddingBottom: 12, position: 'relative' }}>
+                                    <div><strong>{review.author}</strong> <span style={{ color: '#888', fontSize: 12 }}>{review.date ? (new Date(review.date)).toLocaleDateString() : ''}</span></div>
+                                    <div><StarRating rating={review.rating} size="small" /></div>
+                                    <div>{review.comment}</div>
+                                    <button style={{ position: 'absolute', right: 0, top: 0, color: 'red', background: 'none', border: 'none', cursor: 'pointer' }} onClick={() => handleDeleteReview(selectedProductForReviews._id, idx)}>Delete</button>
+                                </li>
+                            ))}
+                        </ul>
+                    )}
+                </div>
+            )}
         </div>
     );
 }

@@ -50,7 +50,7 @@ function Products({ products, addToCart }) {
                             <div className="product-price">${parseFloat(product.price).toFixed(2)}</div>
                             <button
                                 className="add-to-cart-btn"
-                                onClick={() => addToCart(product._id ? product : { ...product, _id: product.id })}
+                                onClick={() => addToCart(product)}
                             >
                                 Add to Cart
                             </button>

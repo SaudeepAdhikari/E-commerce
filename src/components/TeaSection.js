@@ -10,14 +10,14 @@ function TeaSection({ products, addToCart }) {
             </div>
             <div className="tea-list">
                 {products.map((product) => (
-                    <div key={product.id} className="tea-card">
+                    <div key={product._id} className="tea-card">
                         <img src={product.image} alt={product.name} className="tea-card-image" />
                         <div className="tea-card-title">{product.name}</div>
                         <div className="tea-card-desc">{product.description}</div>
                         <div className="tea-card-price">${parseFloat(product.price).toFixed(2)}</div>
                         <button
                             className="tea-card-btn"
-                            onClick={() => addToCart(product._id ? product : { ...product, _id: product.id })}
+                            onClick={() => addToCart(product)}
                         >
                             Add to Cart
                         </button>

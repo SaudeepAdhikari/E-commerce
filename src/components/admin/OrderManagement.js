@@ -1,14 +1,49 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './OrderManagement.css';
 
 function OrderManagement() {
     const [orders, setOrders] = useState([]);
     const [selectedOrder, setSelectedOrder] = useState(null);
 
-    const handleStatusChange = (orderId, newStatus) => {
-        setOrders(prev => prev.map(order =>
-            order.id === orderId ? { ...order, status: newStatus } : order
-        ));
+    useEffect(() => {
+        const fetchOrders = async () => {
+            try {
+                const res = await fetch('http://localhost:5000/api/orders?admin=1');
+                const data = await res.json();
+                setOrders(data);
+            } catch (err) {
+                setOrders([]);
+            }
+        };
+        fetchOrders();
+    }, []);
+
+    const handleStatusChange = async (orderId, newStatus) => {
+        try {
+            const res = await fetch(`http://localhost:5000/api/orders/${orderId}?admin=1`, {
+                method: 'PUT',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ status: newStatus })
+            });
+            if (res.ok) {
+                setOrders(prev => prev.map(order =>
+                    order._id === orderId ? { ...order, status: newStatus } : order
+                ));
+            }
+        } catch { }
+    };
+
+    const handleDelete = async (orderId) => {
+        if (!window.confirm('Delete this order?')) return;
+        try {
+            const res = await fetch(`http://localhost:5000/api/orders/${orderId}?admin=1`, {
+                method: 'DELETE'
+            });
+            if (res.ok) {
+                setOrders(prev => prev.filter(order => order._id !== orderId));
+                setSelectedOrder(null);
+            }
+        } catch { }
     };
 
     const OrderDetails = ({ order }) => {
@@ -20,11 +55,11 @@ function OrderManagement() {
                 <div className="order-info">
                     <div className="info-group">
                         <label>Order ID:</label>
-                        <span>{order.id}</span>
+                        <span>{order._id}</span>
                     </div>
                     <div className="info-group">
                         <label>Customer Name:</label>
-                        <span>{order.customerName}</span>
+                        <span>{order.name}</span>
                     </div>
                     <div className="info-group">
                         <label>Email:</label>
@@ -36,7 +71,7 @@ function OrderManagement() {
                     </div>
                     <div className="info-group">
                         <label>Order Date:</label>
-                        <span>{new Date(order.date).toLocaleDateString()}</span>
+                        <span>{new Date(order.createdAt).toLocaleDateString()}</span>
                     </div>
                     <div className="info-group">
                         <label>Total Amount:</label>
@@ -46,7 +81,7 @@ function OrderManagement() {
                         <label>Status:</label>
                         <select
                             value={order.status}
-                            onChange={(e) => handleStatusChange(order.id, e.target.value)}
+                            onChange={(e) => handleStatusChange(order._id, e.target.value)}
                             className="status-select"
                         >
                             <option value="pending">Pending</option>
@@ -80,6 +115,7 @@ function OrderManagement() {
                         </tbody>
                     </table>
                 </div>
+                <button className="delete-btn" onClick={() => handleDelete(order._id)} style={{ marginTop: 12 }}>Delete Order</button>
             </div>
         );
     };
@@ -106,10 +142,10 @@ function OrderManagement() {
                             </thead>
                             <tbody>
                                 {orders.map(order => (
-                                    <tr key={order.id}>
-                                        <td>#{order.id}</td>
-                                        <td>{order.customerName}</td>
-                                        <td>{new Date(order.date).toLocaleDateString()}</td>
+                                    <tr key={order._id}>
+                                        <td>#{order._id}</td>
+                                        <td>{order.name}</td>
+                                        <td>{new Date(order.createdAt).toLocaleDateString()}</td>
                                         <td>${order.total.toFixed(2)}</td>
                                         <td>
                                             <span className={`status-badge ${order.status}`}>
@@ -122,6 +158,13 @@ function OrderManagement() {
                                                 onClick={() => setSelectedOrder(order)}
                                             >
                                                 View Details
+                                            </button>
+                                            <button
+                                                className="delete-btn"
+                                                onClick={() => handleDelete(order._id)}
+                                                style={{ marginLeft: 8 }}
+                                            >
+                                                Delete
                                             </button>
                                         </td>
                                     </tr>

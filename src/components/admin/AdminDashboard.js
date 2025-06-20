@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './AdminDashboard.css';
 import UserManagement from './UserManagement';
+import AdminReviews from './AdminReviews';
 
 function AdminDashboard({ products = [], onLogout, onDeleteProduct }) {
     const [activeTab, setActiveTab] = useState('overview');
@@ -121,6 +122,8 @@ function AdminDashboard({ products = [], onLogout, onDeleteProduct }) {
                 );
             case 'users':
                 return <UserManagement />;
+            case 'reviews':
+                return <AdminReviews />;
             default:
                 return null;
         }
@@ -166,6 +169,12 @@ function AdminDashboard({ products = [], onLogout, onDeleteProduct }) {
                         onClick={() => setActiveTab('users')}
                     >
                         Users
+                    </button>
+                    <button
+                        className={`nav-item ${activeTab === 'reviews' ? 'active' : ''}`}
+                        onClick={() => setActiveTab('reviews')}
+                    >
+                        Reviews
                     </button>
                 </nav>
                 <button className="logout-btn" onClick={onLogout}>Logout</button>

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import './ProfileModern.css';
+import { format } from 'date-fns';
 
 const ProfileModern = ({ onLogout }) => {
     const location = useLocation();
@@ -15,6 +16,9 @@ const ProfileModern = ({ onLogout }) => {
     const [pwdMsg, setPwdMsg] = useState('');
     const [pwdError, setPwdError] = useState('');
     const [showPwdForm, setShowPwdForm] = useState(false);
+    const [orders, setOrders] = useState([]);
+    const [ordersLoading, setOrdersLoading] = useState(true);
+    const [ordersError, setOrdersError] = useState('');
 
     // Show welcome message if present in location.state
     useEffect(() => {
@@ -49,6 +53,27 @@ const ProfileModern = ({ onLogout }) => {
             setLoading(false);
         };
         fetchUser();
+    }, []);
+
+    useEffect(() => {
+        const fetchOrders = async () => {
+            setOrdersLoading(true);
+            setOrdersError('');
+            const token = localStorage.getItem('token');
+            if (!token) return setOrdersLoading(false);
+            try {
+                const res = await fetch('http://localhost:5000/api/orders/my', {
+                    headers: { 'Authorization': `Bearer ${token}` }
+                });
+                if (!res.ok) throw new Error('Failed to fetch orders');
+                const data = await res.json();
+                setOrders(data);
+            } catch (err) {
+                setOrdersError('Could not load order history.');
+            }
+            setOrdersLoading(false);
+        };
+        fetchOrders();
     }, []);
 
     const handleEdit = () => {

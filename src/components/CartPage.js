@@ -41,13 +41,13 @@ function CartPage({ cart, removeFromCart, cartTotal, updateQuantity }) {
                   alt={item.name}
                   className="cart-item-image"
                   loading="lazy"
-                  onClick={() => navigate(`/product/${item.id}`)}
+                  onClick={() => navigate(`/product/${item._id}`)}
                   style={{ cursor: 'pointer' }}
                 />
                 <div className="cart-item-info">
                   <div
                     className="cart-item-title"
-                    onClick={() => navigate(`/product/${item.id}`)}
+                    onClick={() => navigate(`/product/${item._id}`)}
                     style={{ cursor: 'pointer' }}
                   >
                     {item.name}
@@ -55,9 +55,9 @@ function CartPage({ cart, removeFromCart, cartTotal, updateQuantity }) {
                   <div className="cart-item-desc">{item.description}</div>
                   <div className="cart-item-price">${item.price.toFixed(2)}</div>
                   <div className="cart-item-qty">
-                    <button className="cart-qty-btn" onClick={() => updateQuantity(item.id, item.quantity - 1)} aria-label="Decrease quantity">-</button>
+                    <button className="cart-qty-btn" onClick={() => updateQuantity(item._id, item.quantity - 1)} aria-label="Decrease quantity">-</button>
                     <span>{item.quantity}</span>
-                    <button className="cart-qty-btn" onClick={() => updateQuantity(item.id, item.quantity + 1)} aria-label="Increase quantity">+</button>
+                    <button className="cart-qty-btn" onClick={() => updateQuantity(item._id, item.quantity + 1)} aria-label="Increase quantity">+</button>
                   </div>
                 </div>
                 <button

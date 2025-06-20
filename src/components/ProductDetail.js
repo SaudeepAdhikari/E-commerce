@@ -4,22 +4,10 @@ import { Helmet } from 'react-helmet-async';
 import ReviewsSection from './ReviewsSection';
 import './ProductDetail.css';
 
-function ProductDetail({ products, addToCart }) {
+function ProductDetail({ products, addToCart, user }) {
   const { id } = useParams();
   const navigate = useNavigate();
-  const product = products.find(p => p._id === id);
-  const [productReviews, setProductReviews] = useState(() => {
-    // Retrieve reviews from localStorage if available
-    const savedReviews = localStorage.getItem(`productReviews-${id}`);
-    return savedReviews ? JSON.parse(savedReviews) : [];
-  });
-
-  const handleAddReview = (newReview) => {
-    const updatedReviews = [...productReviews, newReview];
-    setProductReviews(updatedReviews);
-    // Save to localStorage
-    localStorage.setItem(`productReviews-${id}`, JSON.stringify(updatedReviews));
-  };
+  const product = products.find(p => p._id === id || String(p.id) === id);
 
   if (!product) {
     return (
@@ -33,6 +21,8 @@ function ProductDetail({ products, addToCart }) {
       </div>
     );
   }
+
+  const productId = product._id || String(product.id);
 
   return (
     <div className="product-detail">
@@ -52,11 +42,7 @@ function ProductDetail({ products, addToCart }) {
           </button>
         </div>
       </div>
-      <ReviewsSection
-        productId={id}
-        reviews={productReviews}
-        onAddReview={handleAddReview}
-      />
+      <ReviewsSection productId={productId} user={user} />
     </div>
   );
 }
